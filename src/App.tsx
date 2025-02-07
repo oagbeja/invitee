@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  // UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  // VideoCameraOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 import {
@@ -19,7 +19,7 @@ import {
   Input,
 } from "antd";
 
-import { fetchData, addData, delData } from "./utils/api";
+import { fetchData, addData, delData, sendMessage } from "./utils/api";
 
 const { Header, Sider, Content } = Layout;
 
@@ -31,6 +31,7 @@ const App: React.FC = () => {
   } = theme.useToken();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formstate, setFormstate] = useState<any>({});
+  const [message, setMessage] = useState<any>("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -85,7 +86,7 @@ const App: React.FC = () => {
               }}
             >
               <DeleteOutlined
-                twoToneColor="red"
+                twoToneColor='red'
                 onClick={() => handleDelete(el)}
                 style={{ cursor: "pointer" }}
               />
@@ -119,32 +120,32 @@ const App: React.FC = () => {
         style={{ paddingTop: 60 }}
       >
         <Menu
-          theme="dark"
-          mode="inline"
+          theme='dark'
+          mode='inline'
           defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
               icon: <UserOutlined />,
-              label: "nav 1",
+              label: "Home",
             },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
-            },
+            // {
+            //   key: "2",
+            //   icon: <VideoCameraOutlined />,
+            //   label: "nav 2",
+            // },
+            // {
+            //   key: "3",
+            //   icon: <UploadOutlined />,
+            //   label: "nav 3",
+            // },
           ]}
         />
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
           <Button
-            type="text"
+            type='text'
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
@@ -153,6 +154,9 @@ const App: React.FC = () => {
               height: 64,
             }}
           />
+          <label style={{ fontSize: "2vw", fontWeight: "bold" }}>
+            Apostolic Faith ArabRoad Invitation System
+          </label>
         </Header>
         <Content
           style={{
@@ -160,17 +164,33 @@ const App: React.FC = () => {
             padding: 24,
             minHeight: 280,
             // background: colorBgContainer,
-            background: "#ddeecc",
+            background: "#ddeef0",
           }}
         >
           <div
             style={{
               width: "100%",
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              marginBottom: "20px",
             }}
           >
-            <Button type="primary" onClick={showModal} ghost>
+            <div
+              style={{ alignItems: "flex-end", display: "flex", gap: "10px" }}
+            >
+              <textarea
+                value={message}
+                style={{ background: "#fff", color: "#000" }}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={5}
+                cols={30}
+              />
+              <Button type='primary' onClick={() => sendMessage(message)}>
+                Send Bulk Message
+              </Button>
+            </div>
+            <Button type='primary' onClick={showModal}>
               Add
             </Button>
           </div>
@@ -179,7 +199,7 @@ const App: React.FC = () => {
         </Content>
       </Layout>
       <Modal
-        title="Add/Edit Record"
+        title='Add/Edit Record'
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -192,8 +212,8 @@ const App: React.FC = () => {
         ) : (
           <>
             <Input
-              size="large"
-              placeholder="Name"
+              size='large'
+              placeholder='Name'
               onChange={(e) =>
                 setFormstate({ ...formstate, name: e.target.value })
               }
@@ -202,13 +222,13 @@ const App: React.FC = () => {
               value={formstate.name}
             />
             <Input
-              size="large"
-              type="number"
+              size='large'
+              type='number'
               onChange={(e) =>
                 setFormstate({ ...formstate, phnum: e.target.value })
               }
               value={formstate.phnum}
-              placeholder="Phone Number"
+              placeholder='Phone Number'
               prefix={<UserOutlined />}
             />
           </>

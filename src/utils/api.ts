@@ -54,3 +54,18 @@ export const delData = async (id: number) => {
     return;
   }
 };
+
+export const sendMessage = async (message: string) => {
+  try {
+    if (!message) return;
+    const { data }: any = await api.post("bulk-message", { message });
+
+    enqueueSnackbar(data?.message, { variant: "success" });
+    return true;
+  } catch (e: any) {
+    console.log(e?.response?.data?.message);
+
+    enqueueSnackbar(e?.response?.data?.message, { variant: "error" });
+    return;
+  }
+};
